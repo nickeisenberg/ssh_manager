@@ -1,43 +1,79 @@
-# Setup and Functionality
+# myssh_ Tool Documentation
 
-1. Create the file `~/.config/myssh/conf.json`
+The `myssh_` tool is a Bash function designed to simplify the process of establishing SSH connections with dynamic configuration options based on predefined profiles stored in a JSON configuration file. It supports local port forwarding and allows for specifying SSH connection parameters such as port and identity file (pem).
 
-2. Inside the `conf.json`, place the info for the `ip`, `user` and `pem` for
-   the `ssh` connection you want to make. This is done in the following manner:
-   ```json
-   {
-       "<keyname>": {
-           "ip": "<ip_address>",
-           "user": "<remote_host_username>",
-           "pem": "<path_to_pem_file>"
-       },
-   }
-   ```
+## Installation
 
-# Functionality
+To use the `myssh_` tool, you must first include it in your `.bashrc` file or any script file that you source into your shell.
 
-1.   With the above entry, `myssh <keyname>` will run the following:
+1. Open your `.bashrc` file or a custom script file in a text editor.
+2. Copy and paste the `myssh_` function definition into the file.
+3. Save the file and source it to your shell:
    ```bash
-   ssh -p 22 -i <path_to_pem> <remote_host_username>@<ip_address>
+   source ~/.bashrc
    ```
 
-2. `myssh` supports the input of `-L` to port forward to the remotes
-   localhost. For example `myssh <keyname> -L 8000 7474` runs the following:
-   ```bash
-   ssh -i <path_to_pem> \
-   -L 8000:localhost:8000 -L 7474:localhost:7474 \
-   <remote_host_username>@<ip_address>
-   ```
+## Configuration File
 
-3. `myssh` default to port 22, but you can specify another port with `-p`. For 
-   example `myssh <keyname> -p 2000` runs the following:
-   ```bash
-   ssh -i <path_to_pem> -p 2000 <remote_host_username>@<ip_address>
-   ```
+The tool relies on a JSON configuration file located at 
+`~/.config/myssh/conf.json`. This file should contain the SSH connection 
+profiles with their respective configurations, such as IP addresses, 
+usernames, and optional PEM files for authentication.
 
-4. The `-p` and `-L` options can be used in tandem as well. In other words, 
-   `myssh <keyname> -p 2000 -L 8000 7474` will forward the remotes localhost on
-   port 8000 and 7474 to the users localhost port 8000 and 7474.
+Example conf.json format:
+```json
+{
+  "profileName": {
+    "ip": "192.168.1.1",
+    "user": "username",
+    "pem": "/path/to/pem/file"
+  }
+}
+```
 
-5. `myssh -h` will parse the `conf.json` file and tell you all of the available
-    keys.
+# Usage
+
+To use `myssh`, run the `myssh` command followed by the options you wish to 
+use. The general syntax is as follows:
+```bash
+myssh_ [options] [arguments]
+```
+
+## Options
+
+* Profile selection: Specify the profile name directly (e.g., profileName) to 
+use the configuration defined in `conf.json`.
+* `-h, --help`: Displays help information and exits.
+* `-L [local_port]:[remote_port]`: Specifies ports for local port forwarding. 
+   Can be used multiple times for multiple ports.
+*  `-p, --port [port]`: Specifies the port for the SSH connection.
+*  `-dryrun`: Displays the SSH command without executing it.
+
+# Examples
+
+* Connecting to a profile with port forwarding:
+
+  ```bash
+  myssh_ profileName -L 8080:80
+  ```
+  
+  This command establishes an SSH connection using the profileName profile, 
+  forwarding port 80 on the remote host to port 8080 on your local machine.
+
+* Specifying the SSH port:
+
+  ```bash
+  myssh_ profileName -p 2222
+  ```
+
+  This command connects to the remote host using the profileName profile on 
+  port 2222.
+
+* Dry run:
+
+  ```bash
+  myssh_ profileName -dryrun
+  ```
+
+  This command prints the SSH command that would be executed, based on the 
+  profileName profile, without actually establishing the connection.
