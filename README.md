@@ -1,6 +1,10 @@
-# myssh Tool Documentation
+# myssh Documentation
 
-The `myssh` tool is a Bash function designed to simplify the process of establishing SSH connections with dynamic configuration options based on predefined profiles stored in a JSON configuration file. It supports local port forwarding and allows for specifying SSH connection parameters such as port and identity file (pem).
+The `myssh` tool is a Bash function designed to simplify the process of 
+establishing SSH connections with dynamic configuration options based on 
+predefined profiles stored in a JSON configuration file. It supports local 
+port forwarding and allows for specifying SSH connection parameters such as 
+port and identity file (pem).
 
 ## Installation
 
