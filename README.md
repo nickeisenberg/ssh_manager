@@ -1,13 +1,13 @@
-# myssh_ Tool Documentation
+# myssh Tool Documentation
 
-The `myssh_` tool is a Bash function designed to simplify the process of establishing SSH connections with dynamic configuration options based on predefined profiles stored in a JSON configuration file. It supports local port forwarding and allows for specifying SSH connection parameters such as port and identity file (pem).
+The `myssh` tool is a Bash function designed to simplify the process of establishing SSH connections with dynamic configuration options based on predefined profiles stored in a JSON configuration file. It supports local port forwarding and allows for specifying SSH connection parameters such as port and identity file (pem).
 
 ## Installation
 
-To use the `myssh_` tool, you must first include it in your `.bashrc` file or any script file that you source into your shell.
+To use the `myssh` tool, you must first include it in your `.bashrc` file or any script file that you source into your shell.
 
 1. Open your `.bashrc` file or a custom script file in a text editor.
-2. Copy and paste the `myssh_` function definition into the file.
+2. Copy and paste the `myssh` function definition into the file.
 3. Save the file and source it to your shell:
    ```bash
    source ~/.bashrc
@@ -36,7 +36,7 @@ Example conf.json format:
 To use `myssh`, run the `myssh` command followed by the options you wish to 
 use. The general syntax is as follows:
 ```bash
-myssh_ [options] [arguments]
+myssh [options] [arguments]
 ```
 
 ## Options
@@ -54,7 +54,7 @@ use the configuration defined in `conf.json`.
 * Connecting to a profile with port forwarding:
 
   ```bash
-  myssh_ profileName -L 8080:80
+  myssh profileName -L 8080:80
   ```
   
   This command establishes an SSH connection using the profileName profile, 
@@ -63,7 +63,7 @@ use the configuration defined in `conf.json`.
 * Specifying the SSH port:
 
   ```bash
-  myssh_ profileName -p 2222
+  myssh profileName -p 2222
   ```
 
   This command connects to the remote host using the profileName profile on 
@@ -72,7 +72,7 @@ use the configuration defined in `conf.json`.
 * Dry run:
 
   ```bash
-  myssh_ profileName -dryrun
+  myssh profileName -dryrun
   ```
 
   This command prints the SSH command that would be executed, based on the 

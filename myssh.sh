@@ -1,4 +1,4 @@
-function myssh_() {
+function myssh() {
     local CONF_FILE="$HOME/.config/myssh/conf.json"
     local dryrun=0
 
