@@ -1,5 +1,6 @@
-function myssh() {
-    local CONF_FILE="$HOME/.credentials/myssh_conf.json"
+function myssh_() {
+    local CONF_FILE="$HOME/.config/myssh/conf.json"
+    local dryrun=0
 
     if [[ $# -lt 1 ]]; then
         echo "Usage: myssh <option> [argument]"
@@ -26,6 +27,7 @@ function myssh() {
                 done
                 shift
                 ;;
+
             -p|--port)
                 if [[ $# -gt 1 ]]; then
                     port=$2
@@ -36,6 +38,12 @@ function myssh() {
                 fi
                 shift
                 ;;
+
+            -dryrun)
+                dryrun=1
+                shift
+                ;;
+
             -h|--help)
                 echo "Usage: myssh <option> [argument]"
                 for opt in $options; do
@@ -43,6 +51,7 @@ function myssh() {
                 done
                 echo "-L : Specify ports for local port forwarding. Can be used multiple times for multiple ports."
                 echo "-p, --port : Specify the port for the SSH connection."
+                echo "-dryrun : Display the SSH command without executing it."
                 return 0
                 ;;
             *)
@@ -76,8 +85,14 @@ function myssh() {
 
     if [[ -n $ip ]]; then
         ssh_command+=" $user@$ip"
-        echo "Executing command: $ssh_command"
-        eval "$ssh_command"
+        if [[ $dryrun -eq 1 ]]; then
+            echo "Dry-run mode: SSH command is:"
+            echo "$ssh_command"
+        else
+            echo "Executing command: $ssh_command"
+            eval "$ssh_command"
+        fi
+
     else
         echo "No valid IP address found for connection."
         return 1
