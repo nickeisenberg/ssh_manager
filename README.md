@@ -63,6 +63,8 @@ use the configuration defined in `conf.json`.
   
   This command establishes an SSH connection using the profileName profile, 
   forwarding port 80 on the remote host to port 8080 on your local machine.
+  In other words, `ssh ... -L 8080:localhost:80 ...`
+  
 
 * Specifying the SSH port:
 
