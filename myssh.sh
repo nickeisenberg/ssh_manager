@@ -1,9 +1,9 @@
-function myssh_() {
+function myssh() {
     local CONF_FILE="$HOME/.credentials/myssh_conf.json"
 
     if [[ $# -lt 1 ]]; then
-        echo "Usage: myssh_ <option> [argument]"
-        echo "Use 'myssh_ -h' or 'myssh_ --help' for a list of available options."
+        echo "Usage: myssh <option> [argument]"
+        echo "Use 'myssh -h' or 'myssh --help' for a list of available options."
         return 1
     fi
 
@@ -37,7 +37,7 @@ function myssh_() {
                 shift
                 ;;
             -h|--help)
-                echo "Usage: myssh_ <option> [argument]"
+                echo "Usage: myssh <option> [argument]"
                 for opt in $options; do
                     echo "-$opt : SSH into the $opt profile."
                 done
@@ -52,7 +52,7 @@ function myssh_() {
                     pem=$(jq -r --arg key "${1#-}" '.[$key].pem' "$CONF_FILE")
                     shift
                 else
-                    echo "Invalid option. Use 'myssh_ -h' or 'myssh_ --help' for a list of available options."
+                    echo "Invalid option. Use 'myssh -h' or 'myssh --help' for a list of available options."
                     return 1
                 fi
                 ;;
